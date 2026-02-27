@@ -104,6 +104,7 @@ function ProjectGallery({ images }: { images: string[] }) {
                   muted
                   loop
                   playsInline
+                  autoPlay
                 />
               ) : (
                 <img
