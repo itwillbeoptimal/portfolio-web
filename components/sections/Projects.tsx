@@ -293,46 +293,46 @@ function ProjectRow({
           <div className="space-y-14 md:space-y-16">
             {project.details.map((detail, i) => (
               <div key={detail.title} className="detail-item">
-                <div className="flex gap-8 md:gap-12">
-                  <span
-                    className="font-mono text-[12px] md:text-sm shrink-0 mt-0.5 w-5 font-bold text-neon"
-                    aria-hidden="true"
-                  >
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <div className="flex-1 space-y-5">
+                <div className="flex flex-col gap-8 md:gap-12">
+                  <div className="flex gap-4">
+                    <span
+                      className="font-mono text-[12px] md:text-sm shrink-0 mt-0.5 w-5 font-bold text-neon"
+                      aria-hidden="true"
+                    >
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
                     <h4 className="font-semibold leading-snug">
                       {detail.title}
                     </h4>
-                    <div className="flex gap-4 items-start">
-                      <span
-                        className="font-mono text-[11px] md:text-xs tracking-[0.1em] uppercase shrink-0 mt-1 px-2.5 py-1 text-muted border border-[var(--border-strong)]"
-                        style={{ background: 'rgba(237,235,231,0.03)' }}
-                      >
-                        문제
-                      </span>
-                      <p className="text-[var(--muted)] leading-[2]">
-                        <InlineCode text={detail.problem} />
-                      </p>
-                    </div>
-                    <div className="flex gap-4 items-start">
-                      <span
-                        className="font-mono text-[11px] md:text-xs tracking-[0.1em] uppercase shrink-0 mt-1 px-2.5 py-1 text-neon"
-                        style={{
-                          border: '1px solid rgba(0,255,135,0.35)',
-                          background: 'rgba(0,255,135,0.05)',
-                        }}
-                      >
-                        해결
-                      </span>
-                      <p className="leading-[2]">
-                        <InlineCode text={detail.solution} />
-                      </p>
-                    </div>
+                  </div>
+                  <div className="flex gap-4 items-start">
+                    <span
+                      className="font-mono text-[11px] md:text-xs tracking-[0.1em] uppercase shrink-0 mt-1 px-2.5 py-1 text-muted border border-[var(--border-strong)]"
+                      style={{ background: 'rgba(237,235,231,0.03)' }}
+                    >
+                      문제
+                    </span>
+                    <p className="text-[var(--muted)] leading-[2]">
+                      <InlineCode text={detail.problem} />
+                    </p>
+                  </div>
+                  <div className="flex gap-4 items-start">
+                    <span
+                      className="font-mono text-[11px] md:text-xs tracking-[0.1em] uppercase shrink-0 mt-1 px-2.5 py-1 text-neon"
+                      style={{
+                        border: '1px solid rgba(0,255,135,0.35)',
+                        background: 'rgba(0,255,135,0.05)',
+                      }}
+                    >
+                      해결
+                    </span>
+                    <p className="leading-[2]">
+                      <InlineCode text={detail.solution} />
+                    </p>
                   </div>
                 </div>
                 {i < project.details.length - 1 && (
-                  <div className="mt-14 h-px bg-[var(--border)] ml-14 md:ml-20" />
+                  <div className="mt-14 h-px bg-[var(--border)]" />
                 )}
               </div>
             ))}
