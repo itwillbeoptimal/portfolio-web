@@ -15,7 +15,9 @@ export default function Preloader() {
   const progressRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if (!window.location.hash) {
+      window.scrollTo(0, 0);
+    }
     document.body.style.overflow = 'hidden';
 
     const tl = gsap.timeline({

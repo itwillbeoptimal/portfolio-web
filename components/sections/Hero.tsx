@@ -23,34 +23,43 @@ export default function Hero() {
     let ctx: ReturnType<typeof gsap.context> | undefined;
 
     const runAnimation = () => {
+      const atTop = window.scrollY === 0;
+
       ctx = gsap.context(() => {
-        gsap.to(kimRef.current, {
-          y: '0%',
-          opacity: 1,
-          duration: 1.4,
-          ease: 'power4.out',
-          delay: 0.15,
-        });
-        gsap.to(jihunRef.current, {
-          y: '0%',
-          opacity: 1,
-          duration: 1.4,
-          ease: 'power4.out',
-          delay: 0.3,
-        });
-        gsap.to(metaRef.current, {
-          opacity: 1,
-          y: 0,
-          duration: 1.1,
-          ease: 'power3.out',
-          delay: 0.75,
-        });
-        gsap.to(scrollRef.current, {
-          opacity: 1,
-          duration: 1,
-          ease: 'power2.out',
-          delay: 1.1,
-        });
+        if (atTop) {
+          gsap.to(kimRef.current, {
+            y: '0%',
+            opacity: 1,
+            duration: 1.4,
+            ease: 'power4.out',
+            delay: 0.15,
+          });
+          gsap.to(jihunRef.current, {
+            y: '0%',
+            opacity: 1,
+            duration: 1.4,
+            ease: 'power4.out',
+            delay: 0.3,
+          });
+          gsap.to(metaRef.current, {
+            opacity: 1,
+            y: 0,
+            duration: 1.1,
+            ease: 'power3.out',
+            delay: 0.75,
+          });
+          gsap.to(scrollRef.current, {
+            opacity: 1,
+            duration: 1,
+            ease: 'power2.out',
+            delay: 1.1,
+          });
+        } else {
+          gsap.set(kimRef.current, { y: '0%', opacity: 1 });
+          gsap.set(jihunRef.current, { y: '0%', opacity: 1 });
+          gsap.set(metaRef.current, { opacity: 1, y: 0 });
+          gsap.set(scrollRef.current, { opacity: 1 });
+        }
 
         gsap.to(kimRef.current, {
           x: '-60vw',
