@@ -15,7 +15,16 @@ export default function Preloader() {
   const progressRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const tl = gsap.timeline({ onComplete: () => setComplete(true) });
+    window.scrollTo(0, 0);
+    document.body.style.overflow = 'hidden';
+
+    const tl = gsap.timeline({
+      onComplete: () => {
+        document.body.style.overflow = '';
+        document.dispatchEvent(new CustomEvent('preloader:complete'));
+        setComplete(true);
+      },
+    });
 
     tl.to(progressRef.current, {
       scaleX: 1,
@@ -37,6 +46,10 @@ export default function Preloader() {
       { yPercent: -100, duration: 1, ease: 'power4.inOut' },
       '+=0.4',
     );
+
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, []);
 
   if (complete) return null;

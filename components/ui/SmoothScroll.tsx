@@ -35,6 +35,8 @@ export default function SmoothScroll({
       smoothWheel: true,
     });
 
+    lenis.stop();
+
     lenisRef.current = lenis;
     setLenisMounted(lenis);
 
@@ -45,9 +47,14 @@ export default function SmoothScroll({
     });
     gsap.ticker.lagSmoothing(0);
 
-    ScrollTrigger.refresh();
+    const onPreloaderComplete = () => {
+      lenis.start();
+      ScrollTrigger.refresh();
+    };
+    document.addEventListener('preloader:complete', onPreloaderComplete);
 
     return () => {
+      document.removeEventListener('preloader:complete', onPreloaderComplete);
       gsap.ticker.remove(rafId);
       lenis.destroy();
     };
