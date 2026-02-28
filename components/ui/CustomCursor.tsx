@@ -134,7 +134,7 @@ export default function CustomCursor() {
     <>
       <div
         ref={dotRef}
-        className="fixed top-0 left-0 w-2 h-2 rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2"
+        className="fixed top-0 left-0 w-2 h-2 rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 [@media(pointer:coarse)]:hidden"
         style={{
           background: 'var(--neon)',
           willChange: 'transform',
@@ -143,7 +143,7 @@ export default function CustomCursor() {
       />
       <div
         ref={circleRef}
-        className="fixed top-0 left-0 w-9 h-9 rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 opacity-40 flex items-center justify-center overflow-hidden"
+        className="fixed top-0 left-0 w-9 h-9 rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 opacity-40 flex items-center justify-center overflow-hidden [@media(pointer:coarse)]:hidden"
         style={{
           border: '1px solid var(--neon)',
           willChange: 'transform',
