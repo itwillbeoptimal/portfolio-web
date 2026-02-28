@@ -199,7 +199,12 @@ export const projects: Project[] = [
     tags: ['TypeScript', 'React Native', 'TanStack Query', 'Recoil', 'WebView'],
     year: '2024',
     url: 'https://github.com/itwillbeoptimal/bloom-frontend',
-    images: ['/bloom/0.jpeg', '/bloom/1.mp4', '/bloom/2.jpeg', '/bloom/3.jpeg'],
+    images: [
+      '/bloom/0.jpeg',
+      '/bloom/1.webm',
+      '/bloom/2.jpeg',
+      '/bloom/3.jpeg',
+    ],
     details: [
       {
         title: 'WebView를 활용한 스플래시 애니메이션 구현',
