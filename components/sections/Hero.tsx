@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { BsChevronDoubleDown } from 'react-icons/bs';
-import { gsap, ScrollTrigger } from '@/lib/gsap';
+import { gsap } from '@/lib/gsap';
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -15,79 +15,101 @@ export default function Hero() {
     const section = sectionRef.current;
     if (!section) return undefined;
 
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        kimRef.current,
-        { y: '110%', opacity: 0 },
-        { y: '0%', opacity: 1, duration: 1.4, ease: 'power4.out', delay: 0.15 },
-      );
-      gsap.fromTo(
-        jihunRef.current,
-        { y: '110%', opacity: 0 },
-        { y: '0%', opacity: 1, duration: 1.4, ease: 'power4.out', delay: 0.3 },
-      );
-      gsap.fromTo(
-        metaRef.current,
-        { opacity: 0, y: 16 },
-        { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out', delay: 0.75 },
-      );
-      gsap.fromTo(
-        scrollRef.current,
-        { opacity: 0 },
-        { opacity: 1, duration: 1, ease: 'power2.out', delay: 1.1 },
-      );
+    gsap.set(kimRef.current, { y: '110%', opacity: 0 });
+    gsap.set(jihunRef.current, { y: '110%', opacity: 0 });
+    gsap.set(metaRef.current, { opacity: 0, y: 16 });
+    gsap.set(scrollRef.current, { opacity: 0 });
 
-      gsap.to(kimRef.current, {
-        x: '-60vw',
-        opacity: 0,
-        ease: 'none',
-        immediateRender: false,
-        scrollTrigger: {
-          trigger: section,
-          start: 'top top',
-          end: 'bottom bottom',
-          scrub: 1,
-        },
-      });
-      gsap.to(jihunRef.current, {
-        x: '60vw',
-        opacity: 0,
-        ease: 'none',
-        immediateRender: false,
-        scrollTrigger: {
-          trigger: section,
-          start: 'top top',
-          end: 'bottom bottom',
-          scrub: 1,
-        },
-      });
-      gsap.to(metaRef.current, {
-        opacity: 0,
-        y: 12,
-        ease: 'none',
-        immediateRender: false,
-        scrollTrigger: {
-          trigger: section,
-          start: 'top top',
-          end: '35% top',
-          scrub: true,
-        },
-      });
-      gsap.to(scrollRef.current, {
-        opacity: 0,
-        ease: 'none',
-        immediateRender: false,
-        scrollTrigger: {
-          trigger: section,
-          start: 'top top',
-          end: '25% top',
-          scrub: true,
-        },
-      });
-    }, sectionRef);
+    let ctx: ReturnType<typeof gsap.context> | undefined;
 
-    ScrollTrigger.refresh();
-    return () => ctx.revert();
+    const runAnimation = () => {
+      ctx = gsap.context(() => {
+        gsap.to(kimRef.current, {
+          y: '0%',
+          opacity: 1,
+          duration: 1.4,
+          ease: 'power4.out',
+          delay: 0.15,
+        });
+        gsap.to(jihunRef.current, {
+          y: '0%',
+          opacity: 1,
+          duration: 1.4,
+          ease: 'power4.out',
+          delay: 0.3,
+        });
+        gsap.to(metaRef.current, {
+          opacity: 1,
+          y: 0,
+          duration: 1.1,
+          ease: 'power3.out',
+          delay: 0.75,
+        });
+        gsap.to(scrollRef.current, {
+          opacity: 1,
+          duration: 1,
+          ease: 'power2.out',
+          delay: 1.1,
+        });
+
+        gsap.to(kimRef.current, {
+          x: '-60vw',
+          opacity: 0,
+          ease: 'none',
+          immediateRender: false,
+          scrollTrigger: {
+            trigger: section,
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 1,
+          },
+        });
+        gsap.to(jihunRef.current, {
+          x: '60vw',
+          opacity: 0,
+          ease: 'none',
+          immediateRender: false,
+          scrollTrigger: {
+            trigger: section,
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 1,
+          },
+        });
+        gsap.to(metaRef.current, {
+          opacity: 0,
+          y: 12,
+          ease: 'none',
+          immediateRender: false,
+          scrollTrigger: {
+            trigger: section,
+            start: 'top top',
+            end: '35% top',
+            scrub: true,
+          },
+        });
+        gsap.to(scrollRef.current, {
+          opacity: 0,
+          ease: 'none',
+          immediateRender: false,
+          scrollTrigger: {
+            trigger: section,
+            start: 'top top',
+            end: '25% top',
+            scrub: true,
+          },
+        });
+      }, sectionRef);
+    };
+
+    document.addEventListener('preloader:complete', runAnimation, {
+      once: true,
+    });
+
+    return () => {
+      document.removeEventListener('preloader:complete', runAnimation);
+      ctx?.revert();
+    };
   }, []);
 
   return (
