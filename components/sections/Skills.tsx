@@ -163,7 +163,6 @@ export default function Skills() {
         gsap.from(gridRef.current.querySelectorAll('.skill-card'), {
           y: 32,
           opacity: 0,
-          immediateRender: false,
           stagger: 0.08,
           duration: 0.75,
           ease: 'power3.out',

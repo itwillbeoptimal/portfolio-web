@@ -34,7 +34,6 @@ export default function Contact() {
       gsap.from(headerRef.current, {
         y: 20,
         opacity: 0,
-        immediateRender: false,
         duration: 0.9,
         ease: 'power3.out',
         scrollTrigger: {
@@ -48,7 +47,6 @@ export default function Contact() {
         gsap.from(iconsRef.current.querySelectorAll('a'), {
           y: 20,
           opacity: 0,
-          immediateRender: false,
           stagger: 0.12,
           duration: 0.7,
           ease: 'power3.out',

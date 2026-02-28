@@ -77,7 +77,6 @@ export default function About() {
         gsap.from(statsRef.current.children, {
           y: 20,
           opacity: 0,
-          immediateRender: false,
           stagger: 0.1,
           duration: 0.7,
           ease: 'power3.out',
