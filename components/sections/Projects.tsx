@@ -1,6 +1,12 @@
 'use client';
 
-import { useEffect, useRef, useState, useCallback } from 'react';
+import {
+  useState,
+  useRef,
+  useEffect,
+  useLayoutEffect,
+  useCallback,
+} from 'react';
 import { SiGithub } from 'react-icons/si';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
@@ -149,22 +155,33 @@ function ProjectGallery({ images }: { images: string[] }) {
 
 function ProjectRow({
   project,
+  index,
   isOpen,
   onToggle,
+  rowRefs,
+  detailRefs,
 }: {
   project: Project;
+  index: number;
   isOpen: boolean;
   onToggle: (id: string) => void;
+  rowRefs: { current: (HTMLDivElement | null)[] };
+  detailRefs: { current: (HTMLDivElement | null)[] };
 }) {
   const rowRef = useRef<HTMLDivElement>(null);
   const detailRef = useRef<HTMLDivElement>(null);
   const initialized = useRef(false);
-  const lenis = useLenis();
 
-  useEffect(() => {
-    if (!isOpen || !rowRef.current) return;
-    lenis?.scrollTo(rowRef.current, { offset: -80 });
-  }, [isOpen, lenis]);
+  useLayoutEffect(() => {
+    const rows = rowRefs.current;
+    const details = detailRefs.current;
+    rows[index] = rowRef.current;
+    details[index] = detailRef.current;
+    return () => {
+      rows[index] = null;
+      details[index] = null;
+    };
+  }, [index, rowRefs, detailRefs]);
 
   useEffect(() => {
     if (!detailRef.current) return;
@@ -369,10 +386,75 @@ export default function Projects() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const [expanded, setExpanded] = useState<string | null>(null);
+  const rowRefs = useRef<(HTMLDivElement | null)[]>(
+    Array(projects.length).fill(null),
+  );
+  const detailRefs = useRef<(HTMLDivElement | null)[]>(
+    Array(projects.length).fill(null),
+  );
+  const lenis = useLenis();
 
-  const handleToggle = useCallback((id: string) => {
-    setExpanded((prev) => (prev === id ? null : id));
-  }, []);
+  const handleToggle = useCallback(
+    (id: string) => {
+      const nextId = id === expanded ? null : id;
+
+      if (nextId && expanded) {
+        const oldIndex = projects.findIndex((p) => p.id === expanded);
+        const newIndex = projects.findIndex((p) => p.id === nextId);
+        const newRow = rowRefs.current[newIndex];
+        const oldDetail = detailRefs.current[oldIndex];
+        const captured = nextId;
+
+        setExpanded(null);
+
+        if (newIndex > oldIndex && oldDetail) {
+          lenis?.stop();
+          let prevHeight = oldDetail.offsetHeight;
+          let rafId: number;
+          const followShrink = () => {
+            const curr = oldDetail.offsetHeight;
+            const delta = prevHeight - curr;
+            if (delta > 0) {
+              window.scrollTo(0, Math.max(0, window.scrollY - delta));
+            }
+            prevHeight = curr;
+            rafId = requestAnimationFrame(followShrink);
+          };
+          rafId = requestAnimationFrame(followShrink);
+
+          setTimeout(() => {
+            cancelAnimationFrame(rafId);
+            lenis?.start();
+            setExpanded(captured);
+            if (newRow && lenis) {
+              requestAnimationFrame(() =>
+                lenis.scrollTo(newRow, { offset: -80 }),
+              );
+            }
+          }, 400);
+        } else {
+          setTimeout(() => {
+            setExpanded(captured);
+            if (newRow && lenis) {
+              requestAnimationFrame(() =>
+                lenis.scrollTo(newRow, { offset: -80 }),
+              );
+            }
+          }, 400);
+        }
+      } else if (nextId) {
+        setExpanded(nextId);
+        const newRow =
+          rowRefs.current[projects.findIndex((p) => p.id === nextId)];
+        if (newRow && lenis) {
+          requestAnimationFrame(() => lenis.scrollTo(newRow, { offset: -80 }));
+        }
+      } else {
+        setExpanded(null);
+      }
+    },
+    [expanded, lenis],
+  );
 
   useClipReveal(titleRef);
 
@@ -415,12 +497,15 @@ export default function Projects() {
         각 항목을 클릭하면 구현 내용을 확인할 수 있습니다.
       </p>
       <div ref={listRef} className="relative border-t border-[var(--border)]">
-        {projects.map((project) => (
+        {projects.map((project, i) => (
           <ProjectRow
             key={project.id}
             project={project}
+            index={i}
             isOpen={expanded === project.id}
             onToggle={handleToggle}
+            rowRefs={rowRefs}
+            detailRefs={detailRefs}
           />
         ))}
       </div>
