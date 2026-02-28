@@ -139,14 +139,14 @@ export default function About() {
           className="md:col-span-2 flex flex-col gap-6 mt-4 md:mt-0"
         >
           <div className="p-8 md:p-12 flex flex-col items-center hover-glow transition-all duration-300 bg-card border border-[var(--border)]">
-            <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden mb-8 border border-[var(--border)] relative group">
+            <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden mb-6 border border-[var(--border)] relative group">
               <img
                 src="/photo.webp"
                 alt="Profile"
                 className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
               />
             </div>
-            <h3 className="text-[1.6rem] font-bold">김지훈</h3>
+            <h3 className="mb-6 text-[1.6rem] font-bold">김지훈</h3>
             <div className="w-full flex flex-col gap-5 text-left">
               {PROFILE_ROWS.map(({ label, value }, i) => (
                 <div
