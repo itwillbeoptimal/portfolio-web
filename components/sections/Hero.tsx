@@ -96,7 +96,7 @@ export default function Hero() {
             style={{ opacity: 0 }}
           >
             반갑습니다
-            <h3 className="inline font-display">,</h3>
+            <span className="inline font-display">,</span>
           </h3>
           <h2
             ref={line2Ref}
@@ -129,7 +129,7 @@ export default function Hero() {
             />
             <h2 className="font-extrabold tracking-[-0.03em] leading-none shrink-0">
               입니다
-              <h2 className="inline font-display">.</h2>
+              <span className="inline font-display">.</span>
             </h2>
           </div>
         </div>
