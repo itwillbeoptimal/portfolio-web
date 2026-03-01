@@ -95,14 +95,25 @@ export default function Hero() {
             className="text-[var(--muted)] tracking-[0.15em] mb-1 md:mb-2"
             style={{ opacity: 0 }}
           >
-            반갑습니다,
+            반갑습니다
+            <h3 className="inline font-display">,</h3>
           </h3>
           <h2
             ref={line2Ref}
-            className="font-black tracking-[-0.03em] leading-none mb-2 md:mb-3"
+            className="font-extrabold tracking-[-0.03em] leading-none mb-2 md:mb-3"
             style={{ opacity: 0, transform: 'translateY(20px)' }}
           >
-            프론트엔드 개발자
+            <span
+              style={{
+                background: 'var(--gradient-h)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}
+            >
+              프론트엔드
+            </span>
+            <span> 개발자</span>
           </h2>
           <div
             ref={line3Ref}
@@ -116,8 +127,9 @@ export default function Hero() {
               style={{ height: 'clamp(2.8rem, 7.5vw, 6.5rem)' }}
               fetchPriority="high"
             />
-            <h2 className="font-black tracking-[-0.03em] leading-none shrink-0">
-              입니다.
+            <h2 className="font-extrabold tracking-[-0.03em] leading-none shrink-0">
+              입니다
+              <h2 className="inline font-display">.</h2>
             </h2>
           </div>
         </div>
