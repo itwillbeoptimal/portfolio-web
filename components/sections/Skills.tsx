@@ -258,7 +258,7 @@ export default function Skills() {
               }}
             />
             <div className="relative z-10 w-full h-full flex flex-col">
-              <h3 className="font-mono text-[11px] md:text-xs font-bold uppercase tracking-[0.25em] mb-8 text-neon">
+              <h3 className="text-[11px] md:text-xs font-bold uppercase tracking-[0.25em] mb-8 text-neon">
                 {category}
               </h3>
               <ul className="flex flex-col gap-5 flex-1">

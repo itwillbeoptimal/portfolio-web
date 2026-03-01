@@ -134,7 +134,7 @@ function ProjectGallery({ images }: { images: string[] }) {
           <button
             type="button"
             onClick={() => swiper?.slidePrev()}
-            className="font-mono text-[11px] text-[var(--muted)] hover:text-[var(--text)] transition-colors duration-200 px-2 py-1 border border-[var(--border)] tracking-[0.1em]"
+            className="text-[11px] text-[var(--muted)] hover:text-[var(--text)] transition-colors duration-200 px-2 py-1 border border-[var(--border)] tracking-[0.1em]"
             aria-label="이전"
           >
             이전
@@ -142,7 +142,7 @@ function ProjectGallery({ images }: { images: string[] }) {
           <button
             type="button"
             onClick={() => swiper?.slideNext()}
-            className="font-mono text-[11px] text-[var(--muted)] hover:text-[var(--text)] transition-colors duration-200 px-2 py-1 border border-[var(--border)] tracking-[0.1em]"
+            className="text-[11px] text-[var(--muted)] hover:text-[var(--text)] transition-colors duration-200 px-2 py-1 border border-[var(--border)] tracking-[0.1em]"
             aria-label="다음"
           >
             다음
@@ -264,7 +264,7 @@ function ProjectRow({
           </span>
           <div className="flex-1 min-w-0">
             <h3
-              className="font-display font-bold leading-tight transition-colors duration-300"
+              className="font-bold leading-tight transition-colors duration-300"
               style={{ color: isOpen ? 'var(--neon)' : 'var(--text)' }}
             >
               {project.title}
@@ -324,7 +324,7 @@ function ProjectRow({
                   </div>
                   <div className="flex gap-4 items-start">
                     <span
-                      className="font-mono text-[11px] md:text-xs tracking-[0.1em] uppercase shrink-0 mt-1 px-2.5 py-1 text-muted border border-[var(--border-strong)]"
+                      className="text-[11px] md:text-xs tracking-[0.1em] uppercase shrink-0 mt-1 px-2.5 py-1 text-muted border border-[var(--border-strong)]"
                       style={{ background: 'rgba(237,235,231,0.03)' }}
                     >
                       문제
@@ -335,7 +335,7 @@ function ProjectRow({
                   </div>
                   <div className="flex gap-4 items-start">
                     <span
-                      className="font-mono text-[11px] md:text-xs tracking-[0.1em] uppercase shrink-0 mt-1 px-2.5 py-1 text-neon"
+                      className="text-[11px] md:text-xs tracking-[0.1em] uppercase shrink-0 mt-1 px-2.5 py-1 text-neon"
                       style={{
                         border: '1px solid rgba(0,255,135,0.35)',
                         background: 'rgba(0,255,135,0.05)',
