@@ -408,14 +408,17 @@ export default function Projects() {
         setExpanded(null);
 
         if (newIndex > oldIndex && oldDetail) {
-          lenis?.stop();
           let prevHeight = oldDetail.offsetHeight;
           let rafId: number;
           const followShrink = () => {
             const curr = oldDetail.offsetHeight;
             const delta = prevHeight - curr;
-            if (delta > 0) {
-              window.scrollTo(0, Math.max(0, window.scrollY - delta));
+            if (lenis && delta > 0) {
+              const next = Math.max(0, lenis.scroll - delta);
+
+              lenis.scrollTo(next, {
+                immediate: true,
+              });
             }
             prevHeight = curr;
             rafId = requestAnimationFrame(followShrink);
@@ -424,7 +427,6 @@ export default function Projects() {
 
           setTimeout(() => {
             cancelAnimationFrame(rafId);
-            lenis?.start();
             setExpanded(captured);
             if (newRow && lenis) {
               requestAnimationFrame(() =>
