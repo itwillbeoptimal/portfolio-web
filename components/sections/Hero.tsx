@@ -6,97 +6,62 @@ import { gsap } from '@/lib/gsap';
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
-  const kimRef = useRef<HTMLHeadingElement>(null);
-  const jihunRef = useRef<HTMLHeadingElement>(null);
-  const metaRef = useRef<HTMLDivElement>(null);
+  const line1Ref = useRef<HTMLHeadingElement>(null);
+  const line2Ref = useRef<HTMLHeadingElement>(null);
+  const line3Ref = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return undefined;
 
-    gsap.set(kimRef.current, { y: '110%', opacity: 0 });
-    gsap.set(jihunRef.current, { y: '110%', opacity: 0 });
-    gsap.set(metaRef.current, { opacity: 0, y: 16 });
-    gsap.set(scrollRef.current, { opacity: 0 });
-
     let ctx: ReturnType<typeof gsap.context> | undefined;
 
     const runAnimation = () => {
       const atTop = window.scrollY === 0;
+      const lines = [line1Ref.current, line2Ref.current, line3Ref.current];
 
       ctx = gsap.context(() => {
         if (atTop) {
-          gsap.to(kimRef.current, {
-            y: '0%',
-            opacity: 1,
-            duration: 1.4,
-            ease: 'power4.out',
-            delay: 0.15,
-          });
-          gsap.to(jihunRef.current, {
-            y: '0%',
-            opacity: 1,
-            duration: 1.4,
-            ease: 'power4.out',
-            delay: 0.3,
-          });
-          gsap.to(metaRef.current, {
+          gsap.to(lines, {
             opacity: 1,
             y: 0,
             duration: 1.1,
             ease: 'power3.out',
-            delay: 0.75,
+            stagger: 0.2,
+            delay: 0.2,
           });
           gsap.to(scrollRef.current, {
             opacity: 1,
             duration: 1,
-            ease: 'power2.out',
-            delay: 1.1,
+            delay: 0.9,
           });
         } else {
-          gsap.set(kimRef.current, { y: '0%', opacity: 1 });
-          gsap.set(jihunRef.current, { y: '0%', opacity: 1 });
-          gsap.set(metaRef.current, { opacity: 1, y: 0 });
+          gsap.set(lines, { opacity: 1, y: 0 });
           gsap.set(scrollRef.current, { opacity: 1 });
         }
 
-        gsap.to(kimRef.current, {
-          x: '-60vw',
-          opacity: 0,
-          ease: 'none',
-          immediateRender: false,
-          scrollTrigger: {
-            trigger: section,
-            start: 'top top',
-            end: 'bottom bottom',
-            scrub: 1,
-          },
+        const exitItems = [
+          { el: line1Ref.current, start: '10% top', end: '30% top' },
+          { el: line2Ref.current, start: '20% top', end: '40% top' },
+          { el: line3Ref.current, start: '30% top', end: '50% top' },
+        ];
+
+        exitItems.forEach(({ el, start, end }) => {
+          gsap.to(el, {
+            opacity: 0,
+            y: -40,
+            ease: 'none',
+            immediateRender: false,
+            scrollTrigger: {
+              trigger: section,
+              start,
+              end,
+              scrub: true,
+            },
+          });
         });
-        gsap.to(jihunRef.current, {
-          x: '60vw',
-          opacity: 0,
-          ease: 'none',
-          immediateRender: false,
-          scrollTrigger: {
-            trigger: section,
-            start: 'top top',
-            end: 'bottom bottom',
-            scrub: 1,
-          },
-        });
-        gsap.to(metaRef.current, {
-          opacity: 0,
-          y: 12,
-          ease: 'none',
-          immediateRender: false,
-          scrollTrigger: {
-            trigger: section,
-            start: 'top top',
-            end: '35% top',
-            scrub: true,
-          },
-        });
+
         gsap.to(scrollRef.current, {
           opacity: 0,
           ease: 'none',
@@ -104,7 +69,7 @@ export default function Hero() {
           scrollTrigger: {
             trigger: section,
             start: 'top top',
-            end: '25% top',
+            end: '5% top',
             scrub: true,
           },
         });
@@ -122,58 +87,49 @@ export default function Hero() {
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      id="hero"
-      className="relative w-full overflow-hidden h-[120vh]"
-    >
-      <div className="sticky top-0 w-full h-screen bg-[var(--bg)] flex flex-col items-center justify-center">
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              'radial-gradient(circle at center, rgba(8,8,8,0) 30%, rgba(8,8,8,1) 75%)',
-          }}
-        />
-        <div className="relative z-10 flex flex-col items-center pointer-events-none select-none">
-          <div className="flex flex-col items-center">
-            <div className="overflow-hidden pb-2">
-              <h1
-                ref={kimRef}
-                className="font-display font-black leading-[0.85] tracking-[-0.04em] text-center m-0 text-foreground"
-              >
-                KIM
-              </h1>
-            </div>
-            <div className="overflow-hidden pb-2">
-              <h1
-                ref={jihunRef}
-                className="font-display font-black leading-[0.85] tracking-[-0.04em] text-center m-0 text-foreground"
-              >
-                JIHUN
-              </h1>
-            </div>
-          </div>
-          <div
-            ref={metaRef}
-            className="mt-8 md:mt-10 flex flex-col items-center gap-3"
+    <section ref={sectionRef} id="hero" className="relative w-full h-[140vh]">
+      <div className="sticky top-0 h-screen flex flex-col items-center justify-center px-6 md:px-16 overflow-hidden">
+        <div className="flex flex-col w-full max-w-xl">
+          <h3
+            ref={line1Ref}
+            className="text-[var(--muted)] tracking-[0.15em] mb-1 md:mb-2"
+            style={{ opacity: 0 }}
           >
-            <p className="text-[0.9rem] tracking-[0.3em] uppercase">
-              Frontend Developer
-            </p>
-            <p
-              className="font-sans tracking-[0.02em] leading-[1.8] text-center"
-              style={{ fontSize: 'clamp(0.85rem, 1.5vw, 1.05rem)' }}
-            >
-              기능만 동작하는 화면에 만족하지 않는 개발자
-            </p>
+            반갑습니다,
+          </h3>
+          <h2
+            ref={line2Ref}
+            className="font-black tracking-[-0.03em] leading-none mb-2 md:mb-3"
+            style={{ opacity: 0, transform: 'translateY(20px)' }}
+          >
+            프론트엔드 개발자
+          </h2>
+          <div
+            ref={line3Ref}
+            className="flex items-end justify-end gap-2 md:gap-4"
+            style={{ opacity: 0, transform: 'translateY(20px)' }}
+          >
+            <img
+              src="/calligraphy.gif"
+              alt="김지훈"
+              className="w-auto"
+              style={{ height: 'clamp(2.8rem, 7.5vw, 6.5rem)' }}
+              fetchPriority="high"
+            />
+            <h2 className="font-black tracking-[-0.03em] leading-none shrink-0">
+              입니다.
+            </h2>
           </div>
         </div>
         <div
           ref={scrollRef}
-          className="absolute bottom-8 md:bottom-12 z-30 flex items-center"
+          className="absolute"
+          style={{
+            opacity: 0,
+            bottom: 'calc(4rem + env(safe-area-inset-bottom))',
+          }}
         >
-          <BsChevronDoubleDown className="float-down text-2xl" />
+          <BsChevronDoubleDown className="float-down text-2xl text-[var(--muted)]" />
         </div>
       </div>
     </section>
