@@ -38,7 +38,7 @@ export default function Navbar() {
     >
       <a
         href="#hero"
-        className="font-mono text-neon text-[13px] md:text-sm tracking-[0.2em] uppercase font-bold"
+        className="font-display text-neon text-[13px] md:text-sm tracking-[0.2em] uppercase font-bold"
       >
         KIM JIHUN
       </a>
