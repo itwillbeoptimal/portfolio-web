@@ -21,6 +21,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL!),
   title: '김지훈 | 프론트엔드 개발자',
   description: '프론트엔드 개발자 김지훈의 포트폴리오입니다.',
   icons: {
@@ -29,6 +30,14 @@ export const metadata: Metadata = {
   openGraph: {
     title: '김지훈 | 프론트엔드 개발자',
     description: '프론트엔드 개발자 김지훈의 포트폴리오입니다.',
+    images: [
+      {
+        url: '/thumbnail.jpg',
+        width: 1200,
+        height: 700,
+        alt: 'thumbnail',
+      },
+    ],
     locale: 'ko_KR',
     type: 'website',
   },
