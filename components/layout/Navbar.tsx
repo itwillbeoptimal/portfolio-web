@@ -50,7 +50,7 @@ export default function Navbar() {
               className="text-[var(--muted)] hover:text-[var(--text)] transition-colors duration-300 relative group"
             >
               {label}
-              <span className="absolute -bottom-0.5 left-0 w-0 h-px group-hover:w-full transition-all duration-300 [background:var(--gradient-h)]" />
+              <span className="absolute -bottom-0.5 left-0 w-0 h-px group-hover:w-full transition-all duration-300 [background:var(--neon)]" />
             </a>
           </li>
         ))}
