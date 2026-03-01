@@ -23,6 +23,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: '김지훈 | 프론트엔드 개발자',
   description: '프론트엔드 개발자 김지훈의 포트폴리오입니다.',
+  icons: {
+    icon: '/favicon.svg',
+  },
   openGraph: {
     title: '김지훈 | 프론트엔드 개발자',
     description: '프론트엔드 개발자 김지훈의 포트폴리오입니다.',
