@@ -42,13 +42,6 @@ export const projects: Project[] = [
       '/tic-tac-talk/2.jpg',
       '/tic-tac-talk/3.jpg',
       '/tic-tac-talk/4.jpg',
-      '/tic-tac-talk/5.jpg',
-      '/tic-tac-talk/6.jpg',
-      '/tic-tac-talk/7.jpg',
-      '/tic-tac-talk/8.jpg',
-      '/tic-tac-talk/9.jpg',
-      '/tic-tac-talk/10.jpg',
-      '/tic-tac-talk/11.jpg',
     ],
     details: [
       {
@@ -202,8 +195,6 @@ export const projects: Project[] = [
     images: [
       '/bloom/0.jpeg',
       '/bloom/1.webm',
-      '/bloom/2.jpeg',
-      '/bloom/3.jpeg',
     ],
     details: [
       {
