@@ -108,6 +108,8 @@ export const projects: Project[] = [
       '/jamjam/4.jpg',
       '/jamjam/5.jpg',
       '/jamjam/6.jpg',
+      '/jamjam/7.jpg',
+      '/jamjam/8.jpg',
     ],
     details: [
       {
