@@ -273,16 +273,6 @@ function ProjectRow({
               {project.subtitle}
             </p>
           </div>
-          <div className="flex flex-wrap gap-1.5 md:w-64 shrink-0">
-            {project.tags.slice(0, 4).map((tag) => (
-              <span
-                key={tag}
-                className="font-mono text-[10px] md:text-[11px] text-[var(--muted)] px-2 py-0.5 border border-[var(--border-strong)]"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
           <div className="flex items-center gap-3 shrink-0 pointer-events-auto">
             <span className="font-mono text-[12px] md:text-sm text-[var(--muted)]">
               {project.year}
