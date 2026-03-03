@@ -157,8 +157,44 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: 'house-it',
+    id: 'simple-face-auth-simulator',
     index: '03',
+    title: 'Face Auth Simulator',
+    subtitle: '간단한 얼굴 인증 시스템을 구현한 토이 프로젝트',
+    description:
+      'Express.js API 서버, FastAPI 기반 얼굴 인식 서버, React 웹, React Native 앱을 모노레포로 구성한 얼굴 인식 체크인 시스템입니다. 모바일 앱에서 얼굴 데이터를 등록하고, 웹에서 얼굴 인식을 통해 사용자를 인증할 수 있습니다.',
+    tags: [
+      'TypeScript',
+      'Express.js',
+      'PostgreSQL',
+      'Prisma',
+      'FastAPI',
+      'React',
+      'React Native',
+    ],
+    year: '2025',
+    url: 'https://github.com/itwillbeoptimal/simple-face-auth-simulator',
+    images: ['/face-auth/0.webm', '/face-auth/1.webm', '/face-auth/2.webm'],
+    details: [
+      {
+        title: '실시간 얼굴 감지와 UI 피드백 처리',
+        problem:
+          '고품질 얼굴 데이터를 확보하기 위해 얼굴 크기나 여백, 기울기 등의 조건을 실시간으로 검증해야 했습니다.',
+        solution:
+          '`react-native-vision-camera` 라이브러리의 Frame Processor를 활용해 60fps 카메라 프레임을 Worklet 스레드에서 처리했습니다. JS 스레드를 차단하지 않고 조건을 계산해 상황에 맞는 가이드 메시지를 즉시 렌더링하도록 했습니다.',
+      },
+      {
+        title: '이미지 메타데이터(EXIF)로 인한 인식 오류 해결',
+        problem:
+          '실제 모바일에서 촬영한 이미지로 가입했을 때 얼굴 인식 인식률이 낮아지는 문제가 있었습니다.',
+        solution:
+          '모바일 이미지의 EXIF 회전 메타데이터를 FastAPI 서버가 반영하지 않아 이미지가 역방향으로 처리되고 있었습니다. 서버에서 `ImageOps.exif_transpose`로 보정하도록 수정하며, 클라이언트와 서버 사이의 데이터 처리 방식이 다를 수 있음을 확인했습니다.',
+      },
+    ],
+  },
+  {
+    id: 'house-it',
+    index: '04',
     title: '하우스잇',
     subtitle: '청년들의 자립을 돕는 주거 생활 지식 플랫폼',
     description:
@@ -186,7 +222,7 @@ export const projects: Project[] = [
   },
   {
     id: 'bloom',
-    index: '04',
+    index: '05',
     title: 'bloom',
     subtitle: '행동 활성화 기반 무기력 해소 앱 · 제12회 K-해커톤 입상',
     description:
@@ -194,10 +230,7 @@ export const projects: Project[] = [
     tags: ['TypeScript', 'React Native', 'TanStack Query', 'Recoil', 'WebView'],
     year: '2024',
     url: 'https://github.com/itwillbeoptimal/bloom-frontend',
-    images: [
-      '/bloom/0.jpeg',
-      '/bloom/1.webm',
-    ],
+    images: ['/bloom/0.jpeg', '/bloom/1.webm'],
     details: [
       {
         title: 'WebView를 활용한 스플래시 애니메이션 구현',

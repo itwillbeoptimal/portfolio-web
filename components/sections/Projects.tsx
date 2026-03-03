@@ -106,7 +106,7 @@ function ProjectGallery({ images }: { images: string[] }) {
                     videoRefs.current[i] = el;
                   }}
                   src={src}
-                  className="w-full h-full object-cover block"
+                  className="h-full w-auto block mx-auto"
                   muted
                   loop
                   playsInline
