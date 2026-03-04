@@ -202,7 +202,14 @@ export const projects: Project[] = [
     tags: ['TypeScript', 'React', 'Vite PWA', 'TanStack Query', 'Jotai', 'FCM'],
     year: '2025',
     url: 'https://github.com/house-it',
-    images: ['/house-it/0.jpg'],
+    images: [
+      '/house-it/0.jpg',
+      '/house-it/1.jpg',
+      '/house-it/2.jpg',
+      '/house-it/3.jpg',
+      '/house-it/4.jpg',
+      '/house-it/5.jpg',
+    ],
     details: [
       {
         title: 'PWA 및 푸시 알림을 통한 모바일 사용자 경험 강화',
