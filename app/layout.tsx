@@ -1,11 +1,19 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import { Syne, Geist_Mono } from 'next/font/google';
+import localFont from 'next/font/local';
 import './globals.css';
 import CustomCursor from '@/components/ui/CustomCursor';
 import NoiseOverlay from '@/components/ui/NoiseOverlay';
 import Preloader from '@/components/ui/Preloader';
 import SmoothScroll from '@/components/ui/SmoothScroll';
+
+const pretendard = localFont({
+  src: '../public/PretendardVariable.woff2',
+  variable: '--font-pretendard',
+  display: 'swap',
+  weight: '100 900',
+});
 
 const syne = Syne({
   variable: '--font-syne',
@@ -49,23 +57,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className={`${syne.variable} ${geistMono.variable}`}>
-      <head>
-        <link
-          rel="preconnect"
-          href="https://cdn.jsdelivr.net"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preload"
-          as="style"
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
-        />
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
-        />
-      </head>
+    <html
+      lang="ko"
+      className={`${pretendard.variable} ${syne.variable} ${geistMono.variable}`}
+    >
       <body>
         <Preloader />
         <SmoothScroll>

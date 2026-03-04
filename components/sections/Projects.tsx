@@ -7,6 +7,7 @@ import {
   useLayoutEffect,
   useCallback,
 } from 'react';
+import Image from 'next/image';
 import { SiGithub } from 'react-icons/si';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
@@ -99,7 +100,7 @@ function ProjectGallery({ images }: { images: string[] }) {
           style={{ width: '100%', height: '100%' }}
         >
           {images.map((src, i) => (
-            <SwiperSlide key={src}>
+            <SwiperSlide key={src} className="relative">
               {isVideo(src) ? (
                 <video
                   ref={(el) => {
@@ -113,11 +114,12 @@ function ProjectGallery({ images }: { images: string[] }) {
                   autoPlay
                 />
               ) : (
-                <img
+                <Image
                   src={src}
                   alt={`슬라이드 ${i + 1}`}
-                  className="w-full h-full object-cover block"
-                  loading="lazy"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 768px"
+                  className="object-cover"
                 />
               )}
             </SwiperSlide>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import Image from 'next/image';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { useClipReveal } from '@/hooks/useClipReveal';
 import { gsap } from '@/lib/gsap';
@@ -139,10 +140,12 @@ export default function About() {
         >
           <div className="p-8 md:p-12 flex flex-col items-center hover-glow transition-all duration-300 bg-card border border-[var(--border)]">
             <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden mb-6 border border-[var(--border)] relative group">
-              <img
+              <Image
                 src="/photo.webp"
                 alt="Profile"
-                className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
+                fill
+                sizes="(max-width: 768px) 128px, 160px"
+                className="object-cover transition-all duration-500 group-hover:scale-110"
               />
             </div>
             <h3 className="mb-6 text-[1.6rem] font-bold">김지훈</h3>

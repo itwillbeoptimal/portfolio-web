@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import Image from 'next/image';
 import { BsChevronDoubleDown } from 'react-icons/bs';
 import { gsap } from '@/lib/gsap';
 
@@ -120,12 +121,14 @@ export default function Hero() {
             className="flex items-end justify-end gap-2 md:gap-4"
             style={{ opacity: 0, transform: 'translateY(20px)' }}
           >
-            <img
+            <Image
               src="/calligraphy.gif"
               alt="김지훈"
-              className="w-auto"
-              style={{ height: 'clamp(2.8rem, 7.5vw, 6.5rem)' }}
-              fetchPriority="high"
+              width={800}
+              height={422}
+              priority
+              unoptimized
+              style={{ height: 'clamp(2.8rem, 7.5vw, 6.5rem)', width: 'auto' }}
             />
             <h2 className="font-extrabold tracking-[-0.03em] leading-none shrink-0">
               입니다

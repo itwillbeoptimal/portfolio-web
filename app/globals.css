@@ -38,7 +38,7 @@
   --color-text: var(--text);
   --color-muted: var(--muted);
   --font-display: var(--font-syne);
-  --font-sans: 'Pretendard Variable', 'Pretendard', sans-serif;
+  --font-sans: var(--font-pretendard), sans-serif;
   --font-mono: var(--font-geist-mono);
   --font-paperozi: 'Paperozi', sans-serif;
 }
