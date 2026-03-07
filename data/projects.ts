@@ -77,7 +77,7 @@ export const projects: Project[] = [
         problem:
           '초기 로딩 시 미사용 리소스까지 한 번에 로드되면서 TTI가 지연됐고, 폰트 로딩 지연으로 텍스트가 깜빡이는 FOIT 현상이 발생했습니다.',
         solution:
-          '`React.lazy`와 `Suspense`로 라우트 기반 코드 스플리팅을 적용했습니다. 타이머 전용 폰트(818KB)는 실제 사용 문자(숫자, 콜론)만 `glyphhanger`로 서브셋을 제작하여 9.4KB로 줄이고, Recording 페이지 진입 시에만 preload하도록 전략을 재설계했습니다.',
+          '`React.lazy`와 `Suspense`로 라우트 기반 코드 스플리팅을 적용했습니다. 타이머 전용 폰트(818KB)는 실제 사용 문자(숫자, 콜론)만 `glyphhanger`로 서브셋을 제작하여 9.4KB로 줄이고, 녹음 페이지 진입 시에만 `preload`하도록 전략을 재설계했습니다.',
       },
     ],
   },
@@ -117,14 +117,14 @@ export const projects: Project[] = [
         problem:
           '대용량 이미지나 문서를 WebSocket으로 직접 전송할 경우 메시지 브로커 과부하와 전송 실패율 증가, 업로드 완료 전 화면이 멈춘 것처럼 보이는 UX 문제가 있었습니다.',
         solution:
-          '파일 데이터는 HTTP, 메시지 동기화는 WebSocket이 담당하도록 역할을 분리했습니다. 파일 선택 시점에 `FILE_SIZE_LIMIT`와 MIME Type을 검증하고, 업로드 완료 후 반환된 `fileUrl`을 메타데이터로만 소켓 전송했습니다. `URL.createObjectURL`로 낙관적 미리보기를 제공하고, 언마운트 시 `revokeObjectURL`로 메모리 누수를 방지했습니다.',
+          '파일 데이터는 HTTP, 메시지 동기화는 WebSocket이 담당하도록 역할을 분리했습니다. 파일 선택 시점에 파일 크기와 MIME Type을 검증하고, 업로드 완료 후 반환된 `fileUrl`을 메타데이터로만 소켓 전송했습니다. `URL.createObjectURL`로 낙관적 미리보기를 제공하고, 언마운트 시 `revokeObjectURL`로 메모리 누수를 방지했습니다.',
       },
       {
         title: '채팅 내 주문 · 결제 프로세스 통합',
         problem:
           '채팅과 주문 시스템이 분리되어 있으면 대화 흐름이 끊기고 이탈 가능성이 높다고 판단했습니다.',
         solution:
-          '메시지 타입을 `TEXT`, `IMAGE`, `FILE`, `ORDER`로 확장하고, `convertStompMessageToLocal` 유틸리티에서 `orderId`, `orderContent`를 파싱해 일반 채팅과 주문·시스템 메시지를 명확히 구분했습니다. 주문 상태(대기·결제 완료·작업 중·완료)에 따라 메시지 UI와 액션 버튼을 조건부 렌더링해 사용자의 다음 행동을 자연스럽게 유도했습니다.',
+          '메시지 타입을 `TEXT`, `IMAGE`, `FILE`, `ORDER` 등으로 확장해 주문 정보를 메시지 단위에서 표현하도록 설계했습니다. 소켓 수신 메시지에서 주문 데이터를 파싱해 일반 채팅, 주문, 시스템 메시지를 구분해 처리했으며, 결제 요청 전송과 주문 상세 확인 기능을 채팅 흐름 안에서 제공했습니다. 또한 주문 상태에 따라 메시지 UI와 액션 버튼을 조건부 렌더링해 사용자의 다음 행동을 유도했습니다.',
       },
       {
         title: '전역 이벤트 버스 설계',
@@ -188,7 +188,7 @@ export const projects: Project[] = [
         problem:
           '실제 모바일에서 촬영한 이미지로 가입했을 때 얼굴 인식 인식률이 낮아지는 문제가 있었습니다.',
         solution:
-          '모바일 이미지의 EXIF 회전 메타데이터를 FastAPI 서버가 반영하지 않아 이미지가 역방향으로 처리되고 있었습니다. 서버에서 `ImageOps.exif_transpose`로 보정하도록 수정하며, 클라이언트와 서버 사이의 데이터 처리 방식이 다를 수 있음을 확인했습니다.',
+          '모바일에서 촬영한 이미지가 서버에서 역방향으로 처리되는 문제가 있었고, 원인을 확인해 보니 EXIF 회전 메타데이터가 FastAPI에서 반영되지 않고 있었습니다. FastAPI 서버에서 `ImageOps.exif_transpose`로 회전을 보정해 문제를 해결했으며, 이 과정을 통해 클라이언트에서 전달한 데이터의 실제 서버 처리 방식을 확인하는 과정이 필요하다는 점을 배웠습니다.',
       },
     ],
   },
@@ -223,7 +223,7 @@ export const projects: Project[] = [
         problem:
           '고화질 이미지 업로드로 서버 스토리지 비용이 증가했고, iOS 계열 HEIC/HEIF 포맷은 웹 브라우저 호환성 문제로 이미지가 정상 표시되지 않았습니다.',
         solution:
-          '`heic-to` 라이브러리로 HEIC/HEIF를 브라우저 메모리에서 즉시 JPEG로 변환해 크로스 브라우징 문제를 해결했습니다. `browser-image-compression`으로 원본 크기에 따라 압축 전략을 차등 적용(1MB 이상: 화질 0.7 / 이하: 0.9)하고, 최대 해상도를 1920px로 제한해 업로드 속도와 스토리지 비용을 동시에 개선했습니다.',
+          '`heic-to` 라이브러리를 사용하여 HEIC/HEIF를 브라우저 메모리에서 즉시 JPEG로 변환해 크로스 브라우징 문제를 해결했습니다. `browser-image-compression`으로 원본 크기에 따라 압축 전략을 차등 적용하고, 최대 해상도를 제한해 업로드 속도와 스토리지 비용을 동시에 개선했습니다.',
       },
     ],
   },
@@ -244,14 +244,7 @@ export const projects: Project[] = [
         problem:
           'React Native 기본 애니메이션 라이브러리만으로는 원하는 수준의 스플래시 애니메이션 표현이 어려웠습니다. SVG 기반 정교한 라인 드로잉과 CSS 애니메이션을 그대로 활용할 필요가 있었습니다.',
         solution:
-          '`react-native-webview`를 사용해 초기 화면에서 HTML/CSS 기반 애니메이션을 렌더링했습니다. SVG Path Animation 구현 시 `stroke-dasharray`와 `stroke-dashoffset` 속성으로 꽃이 그려지듯 나타나는 라인 드로잉 애니메이션을 구성하고, 애니메이션 종료 시점에 맞춰 Fade Out/Replace 방식으로 메인 화면과 자연스럽게 전환되도록 타이밍을 제어했습니다.',
-      },
-      {
-        title: '가독성을 고려한 한글 타이포그래피 최적화',
-        problem:
-          'React Native 기본 Text 컴포넌트는 한글 문장 렌더링 시 단어 중간에서 줄바꿈이 발생하는 문제가 있었으며, 웹의 `word-break: keep-all`을 네이티브에서 직접 사용할 수 없었습니다.',
-        solution:
-          '`WordBreakText` 컴포넌트를 구현해 문장을 공백 기준으로 분리한 뒤, 각 단어를 `flex-wrap: wrap` 컨테이너에 배치함으로써 화면 크기 변화에도 단어가 잘리지 않고 자연스럽게 줄바꿈되도록 처리했습니다.',
+          '`react-native-webview`를 사용해 초기 화면에서 HTML/CSS 기반 애니메이션을 렌더링했습니다. SVG 파일의 `stroke-dasharray`와 `stroke-dashoffset` 속성을 조절하여 꽃이 그려지듯 나타나는 라인 드로잉 애니메이션을 구성하고, 애니메이션 종료 시점에 맞춰 메인 화면과 자연스럽게 전환되도록 타이밍을 제어했습니다.',
       },
       {
         title: '캘린더 내 공휴일 데이터 연동',
