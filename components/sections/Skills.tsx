@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
+import Image from 'next/image';
 import {
   SiReact,
   SiTypescript,
@@ -67,6 +68,7 @@ interface TechItem {
   name: string;
   icon?: React.ComponentType<IconProps>;
   color?: string;
+  imageSrc?: string;
 }
 
 const competencies: { category: string; items: TechItem[] }[] = [
@@ -85,7 +87,7 @@ const competencies: { category: string; items: TechItem[] }[] = [
     category: '상태 및 데이터',
     items: [
       { name: 'TanStack Query', icon: SiReactquery, color: '#FF4154' },
-      { name: 'Jotai', color: '#888888' },
+      { name: 'Jotai', imageSrc: '/jotai-mascot.png', color: '#888888' },
       { name: 'Recoil', icon: SiRecoil, color: '#3578E5' },
       { name: 'Axios', icon: SiAxios, color: '#5A29E4' },
       { name: 'React Hook Form', icon: SiReacthookform, color: '#EC5990' },
@@ -139,10 +141,9 @@ function MarqueeRow({
         {items.map(({ id, skill }) => (
           <span
             key={id}
-            className="marquee-item font-display text-[1.5rem] md:text-[2rem] font-bold uppercase tracking-wide mx-6 transition-all duration-300 cursor-default text-muted opacity-[0.35]"
+            className="marquee-item font-display text-[1.5rem] md:text-[2rem] font-bold uppercase tracking-wide mx-8 transition-all duration-300 cursor-default text-muted opacity-[0.35]"
           >
             {skill}
-            <span className="mx-5 text-neon opacity-40">·</span>
           </span>
         ))}
       </div>
@@ -262,13 +263,10 @@ export default function Skills() {
                 {category}
               </h3>
               <ul className="flex flex-col gap-5 flex-1">
-                {items.map(({ name, icon: Icon, color }) => (
-                  <li key={name} className="flex items-center gap-3">
-                    <span
-                      className="icon-wrapper flex items-center justify-center w-6 h-6"
-                      data-color={color}
-                    >
-                      {Icon ? (
+                {items.map(({ name, icon: Icon, color, imageSrc }) => {
+                  const renderIcon = () => {
+                    if (Icon) {
+                      return (
                         <Icon
                           size={16}
                           style={{
@@ -276,21 +274,43 @@ export default function Skills() {
                             flexShrink: 0,
                           }}
                         />
-                      ) : (
-                        <span
-                          className="w-3.5 h-3.5 rounded-full shrink-0"
-                          style={{
-                            background: color || 'var(--muted)',
-                            opacity: 0.7,
-                          }}
+                      );
+                    }
+                    if (imageSrc) {
+                      return (
+                        <Image
+                          src={imageSrc}
+                          alt={name}
+                          width={16}
+                          height={16}
+                          className="shrink-0 object-contain"
                         />
-                      )}
-                    </span>
-                    <span className="text-[15.5px] md:text-[16.5px] text-[var(--muted)] group-hover:text-[var(--text)] transition-colors duration-300 leading-[2.1]">
-                      {name}
-                    </span>
-                  </li>
-                ))}
+                      );
+                    }
+                    return (
+                      <span
+                        className="w-3.5 h-3.5 rounded-full shrink-0"
+                        style={{
+                          background: color || 'var(--muted)',
+                          opacity: 0.7,
+                        }}
+                      />
+                    );
+                  };
+                  return (
+                    <li key={name} className="flex items-center gap-3">
+                      <span
+                        className="icon-wrapper flex items-center justify-center w-6 h-6"
+                        data-color={color}
+                      >
+                        {renderIcon()}
+                      </span>
+                      <span className="text-[15.5px] md:text-[16.5px] text-[var(--muted)] group-hover:text-[var(--text)] transition-colors duration-300 leading-[2.1]">
+                        {name}
+                      </span>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           </div>
